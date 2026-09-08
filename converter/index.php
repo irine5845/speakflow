@@ -8,30 +8,37 @@ $user_id = $_SESSION["user_id"];
 ?>
 
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+```
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <title>Text to Speech - SpeakFlow</title>
+<title>Text to Speech - SpeakFlow</title>
 
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet">
+<!-- Bootstrap CSS -->
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet">
 
-    <link
-        rel="stylesheet"
-        href="../assets/css/style.css">
+<!-- Custom CSS -->
+<link
+    rel="stylesheet"
+    href="../assets/css/style.css">
+```
 
 </head>
 
 <body class="bg-light">
 
-<!-- NAVBAR -->
+```
+<!-- =========================
+     NAVBAR
+========================== -->
 
 <nav class="navbar navbar-expand-lg bg-white shadow-sm">
 
@@ -48,7 +55,7 @@ $user_id = $_SESSION["user_id"];
 
             <span class="text-muted">
 
-                <?= htmlspecialchars($_SESSION["full_name"]) ?>
+                <?= htmlspecialchars($_SESSION["full_name"] ?? "User") ?>
 
             </span>
 
@@ -70,44 +77,98 @@ $user_id = $_SESSION["user_id"];
 
     <div class="row">
 
-        <!-- SIDEBAR -->
+        <!-- =========================
+             SIDEBAR
+        ========================== -->
 
-        <aside class="col-md-3 col-lg-2 bg-white min-vh-100 p-3">
+        <aside class="col-md-3 col-lg-2 sidebar">
 
-            <div class="list-group list-group-flush">
+            <!-- Sidebar Brand -->
+
+            <div class="sidebar-brand">
+
+                <a href="../dashboard/index.php">
+                    🎙️ <span>SpeakFlow</span>
+                </a>
+
+            </div>
+
+
+            <!-- Main Menu -->
+
+            <div class="sidebar-title">
+                MAIN MENU
+            </div>
+
+
+            <div class="sidebar-menu">
 
                 <a href="../dashboard/index.php"
-                   class="list-group-item list-group-item-action">
+                   class="sidebar-link">
 
-                    🏠 Dashboard
+                    <span class="menu-icon">🏠</span>
+                    <span>Dashboard</span>
 
                 </a>
+
 
                 <a href="index.php"
-                   class="list-group-item list-group-item-action active">
+                   class="sidebar-link active">
 
-                    🔊 Text to Speech
+                    <span class="menu-icon">🔊</span>
+                    <span>Text to Speech</span>
 
                 </a>
+
 
                 <a href="../documents/index.php"
-                   class="list-group-item list-group-item-action">
+                   class="sidebar-link">
 
-                    📄 My Documents
+                    <span class="menu-icon">📄</span>
+                    <span>My Documents</span>
 
                 </a>
+
 
                 <a href="../history/index.php"
-                   class="list-group-item list-group-item-action">
+                   class="sidebar-link">
 
-                    🕘 Conversion History
+                    <span class="menu-icon">🕘</span>
+                    <span>History</span>
 
                 </a>
 
-                <a href="../profile/index.php"
-                   class="list-group-item list-group-item-action">
+            </div>
 
-                    👤 Profile
+
+            <!-- Divider -->
+
+            <div class="sidebar-divider"></div>
+
+
+            <!-- Account -->
+
+            <div class="sidebar-title">
+                ACCOUNT
+            </div>
+
+
+            <div class="sidebar-menu">
+
+                <a href="../profile/index.php"
+                   class="sidebar-link">
+
+                    <span class="menu-icon">👤</span>
+                    <span>My Profile</span>
+
+                </a>
+
+
+                <a href="../auth/logout.php"
+                   class="sidebar-link logout-link">
+
+                    <span class="menu-icon">🚪</span>
+                    <span>Logout</span>
 
                 </a>
 
@@ -116,9 +177,13 @@ $user_id = $_SESSION["user_id"];
         </aside>
 
 
-        <!-- MAIN CONTENT -->
+        <!-- =========================
+             MAIN CONTENT
+        ========================== -->
 
         <main class="col-md-9 col-lg-10 p-4">
+
+            <!-- Page Header -->
 
             <div class="mb-4">
 
@@ -126,7 +191,7 @@ $user_id = $_SESSION["user_id"];
                     Text to Speech
                 </h2>
 
-                <p class="text-muted">
+                <p class="text-muted mb-0">
                     Enter your text and convert it into speech.
                 </p>
 
@@ -135,7 +200,9 @@ $user_id = $_SESSION["user_id"];
 
             <div class="row g-4">
 
-                <!-- TEXT EDITOR -->
+                <!-- =========================
+                     TEXT EDITOR
+                ========================== -->
 
                 <div class="col-lg-8">
 
@@ -143,20 +210,19 @@ $user_id = $_SESSION["user_id"];
 
                         <div class="card-body p-4">
 
-                            <div class="d-flex justify-content-between
-                                        align-items-center mb-3">
+                            <!-- Text Header -->
 
-                                <label
-                                    for="textInput"
-                                    class="fw-bold">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+
+                                <label for="textInput"
+                                       class="fw-bold">
 
                                     Your Text
 
                                 </label>
 
-                                <span
-                                    id="characterCount"
-                                    class="text-muted">
+                                <span id="characterCount"
+                                      class="text-muted">
 
                                     0 characters
 
@@ -164,6 +230,8 @@ $user_id = $_SESSION["user_id"];
 
                             </div>
 
+
+                            <!-- Text Area -->
 
                             <textarea
                                 id="textInput"
@@ -173,18 +241,16 @@ $user_id = $_SESSION["user_id"];
                                 placeholder="Type or paste your text here..."></textarea>
 
 
-                            <div class="d-flex justify-content-between
-                                        mt-2">
+                            <!-- Text Statistics -->
+
+                            <div class="d-flex justify-content-between mt-2">
 
                                 <small class="text-muted">
-
                                     Maximum 5,000 characters
-
                                 </small>
 
-                                <small
-                                    id="wordCount"
-                                    class="text-muted">
+                                <small id="wordCount"
+                                       class="text-muted">
 
                                     0 words
 
@@ -193,23 +259,27 @@ $user_id = $_SESSION["user_id"];
                             </div>
 
 
-                            <!-- CONTROLS -->
+                            <!-- =========================
+                                 SPEECH CONTROLS
+                            ========================== -->
 
                             <div class="mt-4">
 
                                 <div class="row g-3">
 
+                                    <!-- Language -->
+
                                     <div class="col-md-6">
 
-                                        <label class="form-label fw-semibold">
+                                        <label for="language"
+                                               class="form-label fw-semibold">
 
                                             Language
 
                                         </label>
 
-                                        <select
-                                            id="language"
-                                            class="form-select">
+                                        <select id="language"
+                                                class="form-select">
 
                                             <option value="en-US">
                                                 English (US)
@@ -252,17 +322,19 @@ $user_id = $_SESSION["user_id"];
                                     </div>
 
 
+                                    <!-- Voice -->
+
                                     <div class="col-md-6">
 
-                                        <label class="form-label fw-semibold">
+                                        <label for="voice"
+                                               class="form-label fw-semibold">
 
                                             Voice
 
                                         </label>
 
-                                        <select
-                                            id="voice"
-                                            class="form-select">
+                                        <select id="voice"
+                                                class="form-select">
 
                                             <option>
                                                 Loading voices...
@@ -275,11 +347,16 @@ $user_id = $_SESSION["user_id"];
                                 </div>
 
 
+                                <!-- Range Controls -->
+
                                 <div class="row g-3 mt-2">
+
+                                    <!-- Speed -->
 
                                     <div class="col-md-4">
 
-                                        <label class="form-label fw-semibold">
+                                        <label for="speed"
+                                               class="form-label fw-semibold">
 
                                             Speed
 
@@ -294,9 +371,8 @@ $user_id = $_SESSION["user_id"];
                                             step="0.1"
                                             value="1">
 
-                                        <div
-                                            class="text-center"
-                                            id="speedValue">
+                                        <div id="speedValue"
+                                             class="text-center">
 
                                             1.0x
 
@@ -305,9 +381,12 @@ $user_id = $_SESSION["user_id"];
                                     </div>
 
 
+                                    <!-- Pitch -->
+
                                     <div class="col-md-4">
 
-                                        <label class="form-label fw-semibold">
+                                        <label for="pitch"
+                                               class="form-label fw-semibold">
 
                                             Pitch
 
@@ -322,9 +401,8 @@ $user_id = $_SESSION["user_id"];
                                             step="0.1"
                                             value="1">
 
-                                        <div
-                                            class="text-center"
-                                            id="pitchValue">
+                                        <div id="pitchValue"
+                                             class="text-center">
 
                                             1.0
 
@@ -333,9 +411,12 @@ $user_id = $_SESSION["user_id"];
                                     </div>
 
 
+                                    <!-- Volume -->
+
                                     <div class="col-md-4">
 
-                                        <label class="form-label fw-semibold">
+                                        <label for="volume"
+                                               class="form-label fw-semibold">
 
                                             Volume
 
@@ -350,9 +431,8 @@ $user_id = $_SESSION["user_id"];
                                             step="0.1"
                                             value="1">
 
-                                        <div
-                                            class="text-center"
-                                            id="volumeValue">
+                                        <div id="volumeValue"
+                                             class="text-center">
 
                                             100%
 
@@ -365,58 +445,64 @@ $user_id = $_SESSION["user_id"];
                             </div>
 
 
-                            <!-- BUTTONS -->
+                            <!-- =========================
+                                 ACTION BUTTONS
+                            ========================== -->
 
                             <div class="d-flex flex-wrap gap-2 mt-4">
 
-                                <button
-                                    id="speakBtn"
-                                    class="btn btn-primary">
+                                <button type="button"
+                                        id="speakBtn"
+                                        class="btn btn-primary">
 
                                     ▶️ Speak
 
                                 </button>
 
-                                <button
-                                    id="pauseBtn"
-                                    class="btn btn-warning">
+
+                                <button type="button"
+                                        id="pauseBtn"
+                                        class="btn btn-warning">
 
                                     ⏸️ Pause
 
                                 </button>
 
-                                <button
-                                    id="resumeBtn"
-                                    class="btn btn-success">
+
+                                <button type="button"
+                                        id="resumeBtn"
+                                        class="btn btn-success">
 
                                     ▶️ Resume
 
                                 </button>
 
-                                <button
-                                    id="stopBtn"
-                                    class="btn btn-danger">
+
+                                <button type="button"
+                                        id="stopBtn"
+                                        class="btn btn-danger">
 
                                     ⏹️ Stop
 
                                 </button>
 
-                                <button
-                                    id="clearBtn"
-                                    class="btn btn-outline-secondary">
+
+                                <button type="button"
+                                        id="clearBtn"
+                                        class="btn btn-outline-secondary">
 
                                     🗑️ Clear
 
                                 </button>
 
-                                <button
-    type="button"
-    id="saveBtn"
-    class="btn btn-success">
 
-    💾 Save Document
+                                <button type="button"
+                                        id="saveBtn"
+                                        class="btn btn-success">
 
-</button>
+                                    💾 Save Document
+
+                                </button>
 
                             </div>
 
@@ -427,42 +513,35 @@ $user_id = $_SESSION["user_id"];
                 </div>
 
 
-                <!-- INFORMATION PANEL -->
+                <!-- =========================
+                     INFORMATION PANEL
+                ========================== -->
 
                 <div class="col-lg-4">
+
+                    <!-- Speech Settings -->
 
                     <div class="card border-0 shadow-sm">
 
                         <div class="card-body p-4">
 
                             <h5 class="fw-bold mb-3">
-
                                 🎙️ Speech Settings
-
                             </h5>
 
                             <p class="text-muted">
-
-                                Customize how SpeakFlow reads
-                                your text.
-
+                                Customize how SpeakFlow reads your text.
                             </p>
-
 
                             <hr>
 
 
                             <div class="mb-3">
 
-                                <strong>
-                                    Language
-                                </strong>
+                                <strong>Language</strong>
 
                                 <p class="text-muted small mb-0">
-
-                                    Choose the language that
-                                    matches your text.
-
+                                    Choose the language that matches your text.
                                 </p>
 
                             </div>
@@ -470,15 +549,10 @@ $user_id = $_SESSION["user_id"];
 
                             <div class="mb-3">
 
-                                <strong>
-                                    Voice
-                                </strong>
+                                <strong>Voice</strong>
 
                                 <p class="text-muted small mb-0">
-
-                                    Select an available voice
-                                    installed in your browser.
-
+                                    Select an available voice installed in your browser.
                                 </p>
 
                             </div>
@@ -486,15 +560,10 @@ $user_id = $_SESSION["user_id"];
 
                             <div class="mb-3">
 
-                                <strong>
-                                    Speed
-                                </strong>
+                                <strong>Speed</strong>
 
                                 <p class="text-muted small mb-0">
-
-                                    Adjust how quickly the text
-                                    is spoken.
-
+                                    Adjust how quickly the text is spoken.
                                 </p>
 
                             </div>
@@ -502,14 +571,10 @@ $user_id = $_SESSION["user_id"];
 
                             <div>
 
-                                <strong>
-                                    Pitch
-                                </strong>
+                                <strong>Pitch</strong>
 
                                 <p class="text-muted small mb-0">
-
                                     Change the tone of the voice.
-
                                 </p>
 
                             </div>
@@ -518,6 +583,8 @@ $user_id = $_SESSION["user_id"];
 
                     </div>
 
+
+                    <!-- Tip Card -->
 
                     <div class="card border-0 shadow-sm mt-4">
 
@@ -529,10 +596,9 @@ $user_id = $_SESSION["user_id"];
 
                             <p class="text-muted mb-0">
 
-                                For the best results, use punctuation
-                                such as commas and full stops to help
-                                the speech engine determine natural
-                                pauses.
+                                For the best results, use punctuation such as
+                                commas and full stops to help the speech engine
+                                determine natural pauses.
 
                             </p>
 
@@ -550,11 +616,16 @@ $user_id = $_SESSION["user_id"];
 
 </div>
 
-<!-- SAVE DOCUMENT MODAL -->
+
+<!-- =========================
+     SAVE DOCUMENT MODAL
+========================== -->
 
 <div class="modal fade"
      id="saveDocumentModal"
-     tabindex="-1">
+     tabindex="-1"
+     aria-labelledby="saveDocumentModalLabel"
+     aria-hidden="true">
 
     <div class="modal-dialog">
 
@@ -562,38 +633,46 @@ $user_id = $_SESSION["user_id"];
 
             <div class="modal-header">
 
-                <h5 class="modal-title">
+                <h5 class="modal-title"
+                    id="saveDocumentModalLabel">
+
                     Save Document
+
                 </h5>
 
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal">
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close">
                 </button>
 
             </div>
 
-            <form
-                method="POST"
-                action="../documents/save.php">
+
+            <form method="POST"
+                  action="../documents/save.php">
 
                 <div class="modal-body">
 
                     <div class="mb-3">
 
-                        <label class="form-label fw-semibold">
+                        <label for="documentTitle"
+                               class="form-label fw-semibold">
+
                             Document Title
+
                         </label>
 
                         <input
                             type="text"
+                            id="documentTitle"
                             name="title"
                             class="form-control"
                             placeholder="Enter document title"
                             required>
 
                     </div>
+
 
                     <input
                         type="hidden"
@@ -602,22 +681,22 @@ $user_id = $_SESSION["user_id"];
 
                 </div>
 
+
                 <div class="modal-footer">
 
-                    <button
-                        type="button"
-                        class="btn btn-secondary"
-                        data-bs-dismiss="modal">
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
 
                         Cancel
 
                     </button>
 
-                    <button
-                        type="submit"
-                        class="btn btn-primary">
 
-                        Save Document
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        💾 Save Document
 
                     </button>
 
@@ -632,15 +711,17 @@ $user_id = $_SESSION["user_id"];
 </div>
 
 
+<!-- Bootstrap JavaScript -->
+
 <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
 </script>
 
-<script src="../assets/js/app.js"></script>
 
+<!-- Custom JavaScript -->
 
 <script src="../assets/js/app.js"></script>
+```
 
 </body>
-
 </html>

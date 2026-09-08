@@ -5,9 +5,15 @@ require_once "../config/database.php";
 
 $user_id = $_SESSION["user_id"];
 
+/*
+|--------------------------------------------------------------------------
+| Total Conversions
+|--------------------------------------------------------------------------
+*/
+
 $stmt = $pdo->prepare(
-    "SELECT COUNT(*) 
-     FROM conversions 
+    "SELECT COUNT(*)
+     FROM conversions
      WHERE user_id = ?"
 );
 
@@ -16,9 +22,15 @@ $stmt->execute([$user_id]);
 $total_conversions = $stmt->fetchColumn();
 
 
+/*
+|--------------------------------------------------------------------------
+| Total Documents
+|--------------------------------------------------------------------------
+*/
+
 $stmt = $pdo->prepare(
-    "SELECT COUNT(*) 
-     FROM documents 
+    "SELECT COUNT(*)
+     FROM documents
      WHERE user_id = ?"
 );
 
@@ -26,6 +38,12 @@ $stmt->execute([$user_id]);
 
 $total_documents = $stmt->fetchColumn();
 
+
+/*
+|--------------------------------------------------------------------------
+| Total Characters Converted
+|--------------------------------------------------------------------------
+*/
 
 $stmt = $pdo->prepare(
     "SELECT COALESCE(SUM(character_count), 0)
@@ -40,28 +58,38 @@ $total_characters = $stmt->fetchColumn();
 ?>
 
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
+```
+<meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-    <title>Dashboard - SpeakFlow</title>
+<title>Dashboard - SpeakFlow</title>
 
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet">
+<!-- Bootstrap CSS -->
+<link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet">
 
-    <link
-        rel="stylesheet"
-        href="../assets/css/style.css">
+<!-- Custom CSS -->
+<link
+    rel="stylesheet"
+    href="../assets/css/style.css">
+```
 
 </head>
 
 <body class="bg-light">
+
+```
+<!-- =========================
+     NAVBAR
+========================== -->
 
 <nav class="navbar navbar-expand-lg bg-white shadow-sm">
 
@@ -74,14 +102,16 @@ $total_characters = $stmt->fetchColumn();
 
         </a>
 
+
         <div class="d-flex align-items-center gap-3">
 
             <span class="text-muted">
 
                 Hello,
-                <?= htmlspecialchars($_SESSION["full_name"]) ?>
+                <?= htmlspecialchars($_SESSION["full_name"] ?? "User") ?>
 
             </span>
+
 
             <a href="../auth/logout.php"
                class="btn btn-outline-danger btn-sm">
@@ -97,48 +127,158 @@ $total_characters = $stmt->fetchColumn();
 </nav>
 
 
+<!-- =========================
+     PAGE LAYOUT
+========================== -->
+
 <div class="container-fluid">
 
     <div class="row">
 
-        <!-- SIDEBAR -->
 
-        <aside class="col-md-3 col-lg-2 bg-white min-vh-100 p-3">
+        <!-- =========================
+             SIDEBAR
+        ========================== -->
 
-            <div class="list-group list-group-flush">
+        <aside class="col-md-3 col-lg-2 sidebar">
 
-                <a href="index.php"
-                   class="list-group-item list-group-item-action">
 
-                    🏠 Dashboard
+            <!-- Sidebar Brand -->
+
+            <div class="sidebar-brand">
+
+                <a href="../dashboard/index.php">
+
+                    🎙️ <span>SpeakFlow</span>
 
                 </a>
+
+            </div>
+
+
+            <!-- Main Menu -->
+
+            <div class="sidebar-title">
+
+                MAIN MENU
+
+            </div>
+
+
+            <div class="sidebar-menu">
+
+
+                <!-- Dashboard -->
+
+                <a href="../dashboard/index.php"
+                   class="sidebar-link active">
+
+                    <span class="menu-icon">
+                        🏠
+                    </span>
+
+                    <span>
+                        Dashboard
+                    </span>
+
+                </a>
+
+
+                <!-- Text to Speech -->
 
                 <a href="../converter/index.php"
-                   class="list-group-item list-group-item-action">
+                   class="sidebar-link">
 
-                    🔊 Text to Speech
+                    <span class="menu-icon">
+                        🔊
+                    </span>
+
+                    <span>
+                        Text to Speech
+                    </span>
 
                 </a>
+
+
+                <!-- Documents -->
 
                 <a href="../documents/index.php"
-                   class="list-group-item list-group-item-action">
+                   class="sidebar-link">
 
-                    📄 My Documents
+                    <span class="menu-icon">
+                        📄
+                    </span>
+
+                    <span>
+                        My Documents
+                    </span>
 
                 </a>
+
+
+                <!-- History -->
 
                 <a href="../history/index.php"
-                   class="list-group-item list-group-item-action">
+                   class="sidebar-link">
 
-                    🕘 Conversion History
+                    <span class="menu-icon">
+                        🕘
+                    </span>
+
+                    <span>
+                        History
+                    </span>
 
                 </a>
 
-                <a href="../profile/index.php"
-                   class="list-group-item list-group-item-action">
+            </div>
 
-                    👤 Profile
+
+            <!-- Divider -->
+
+            <div class="sidebar-divider"></div>
+
+
+            <!-- Account -->
+
+            <div class="sidebar-title">
+
+                ACCOUNT
+
+            </div>
+
+
+            <div class="sidebar-menu">
+
+
+                <!-- Profile -->
+
+                <a href="../profile/index.php"
+                   class="sidebar-link">
+
+                    <span class="menu-icon">
+                        👤
+                    </span>
+
+                    <span>
+                        My Profile
+                    </span>
+
+                </a>
+
+
+                <!-- Logout -->
+
+                <a href="../auth/logout.php"
+                   class="sidebar-link logout-link">
+
+                    <span class="menu-icon">
+                        🚪
+                    </span>
+
+                    <span>
+                        Logout
+                    </span>
 
                 </a>
 
@@ -147,9 +287,14 @@ $total_characters = $stmt->fetchColumn();
         </aside>
 
 
-        <!-- MAIN CONTENT -->
+        <!-- =========================
+             MAIN CONTENT
+        ========================== -->
 
         <main class="col-md-9 col-lg-10 p-4">
+
+
+            <!-- Page Header -->
 
             <div class="mb-4">
 
@@ -157,15 +302,24 @@ $total_characters = $stmt->fetchColumn();
                     Dashboard
                 </h2>
 
-                <p class="text-muted">
+                <p class="text-muted mb-0">
+
                     Manage your text-to-speech activities.
+
                 </p>
 
             </div>
 
 
+            <!-- =========================
+                 STATISTICS CARDS
+            ========================== -->
+
             <div class="row g-4">
 
+
+                <!-- Total Conversions -->
+
                 <div class="col-md-4">
 
                     <div class="card border-0 shadow-sm">
@@ -173,11 +327,15 @@ $total_characters = $stmt->fetchColumn();
                         <div class="card-body">
 
                             <h6 class="text-muted">
+
                                 Total Conversions
+
                             </h6>
 
                             <h2 class="fw-bold">
+
                                 <?= $total_conversions ?>
+
                             </h2>
 
                         </div>
@@ -187,6 +345,8 @@ $total_characters = $stmt->fetchColumn();
                 </div>
 
 
+                <!-- Saved Documents -->
+
                 <div class="col-md-4">
 
                     <div class="card border-0 shadow-sm">
@@ -194,11 +354,15 @@ $total_characters = $stmt->fetchColumn();
                         <div class="card-body">
 
                             <h6 class="text-muted">
+
                                 Saved Documents
+
                             </h6>
 
                             <h2 class="fw-bold">
+
                                 <?= $total_documents ?>
+
                             </h2>
 
                         </div>
@@ -208,6 +372,8 @@ $total_characters = $stmt->fetchColumn();
                 </div>
 
 
+                <!-- Characters Converted -->
+
                 <div class="col-md-4">
 
                     <div class="card border-0 shadow-sm">
@@ -215,11 +381,15 @@ $total_characters = $stmt->fetchColumn();
                         <div class="card-body">
 
                             <h6 class="text-muted">
+
                                 Characters Converted
+
                             </h6>
 
                             <h2 class="fw-bold">
+
                                 <?= number_format($total_characters) ?>
+
                             </h2>
 
                         </div>
@@ -230,14 +400,21 @@ $total_characters = $stmt->fetchColumn();
 
             </div>
 
+
+            <!-- =========================
+                 START CONVERTING
+            ========================== -->
 
             <div class="card border-0 shadow-sm mt-4">
 
                 <div class="card-body p-4">
 
                     <h4 class="fw-bold">
+
                         Start Converting
+
                     </h4>
+
 
                     <p class="text-muted">
 
@@ -245,6 +422,7 @@ $total_characters = $stmt->fetchColumn();
                         speech using SpeakFlow.
 
                     </p>
+
 
                     <a href="../converter/index.php"
                        class="btn btn-primary">
@@ -257,11 +435,20 @@ $total_characters = $stmt->fetchColumn();
 
             </div>
 
+
         </main>
 
     </div>
 
 </div>
+
+
+<!-- Bootstrap JavaScript -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+```
 
 </body>
 

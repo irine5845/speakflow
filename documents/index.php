@@ -1,9 +1,16 @@
+```php
 <?php
 
 require_once "../includes/auth.php";
 require_once "../config/database.php";
 
 $user_id = $_SESSION["user_id"];
+
+/*
+|--------------------------------------------------------------------------
+| Fetch User Documents
+|--------------------------------------------------------------------------
+*/
 
 $stmt = $pdo->prepare("
     SELECT *
@@ -30,10 +37,12 @@ $documents = $stmt->fetchAll();
 
     <title>My Documents - SpeakFlow</title>
 
+    <!-- Bootstrap -->
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet">
 
+    <!-- SpeakFlow Custom CSS -->
     <link
         rel="stylesheet"
         href="../assets/css/style.css">
@@ -42,6 +51,10 @@ $documents = $stmt->fetchAll();
 
 <body class="bg-light">
 
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
 
 <nav class="navbar navbar-expand-lg bg-white shadow-sm">
 
@@ -59,7 +72,9 @@ $documents = $stmt->fetchAll();
 
             <span class="text-muted">
 
-                <?= htmlspecialchars($_SESSION["full_name"]) ?>
+                <?= htmlspecialchars(
+                    $_SESSION["full_name"] ?? "User"
+                ) ?>
 
             </span>
 
@@ -78,55 +93,123 @@ $documents = $stmt->fetchAll();
 </nav>
 
 
+<!-- =========================================================
+     PAGE LAYOUT
+========================================================= -->
+
 <div class="container-fluid">
 
     <div class="row">
 
 
-        <!-- SIDEBAR -->
+        <!-- =====================================================
+             SIDEBAR
+        ====================================================== -->
 
-        <aside
-            class="col-md-3 col-lg-2 bg-white min-vh-100 p-3">
+        <aside class="col-md-3 col-lg-2 sidebar">
 
-            <div class="list-group list-group-flush">
+            <!-- Brand -->
+
+            <div class="sidebar-brand">
+
+                <a href="../dashboard/index.php">
+
+                    🎙️ <span>SpeakFlow</span>
+
+                </a>
+
+            </div>
+
+
+            <!-- Main Menu -->
+
+            <div class="sidebar-title">
+
+                MAIN MENU
+
+            </div>
+
+            <div class="sidebar-menu">
 
                 <a
                     href="../dashboard/index.php"
-                    class="list-group-item list-group-item-action">
+                    class="sidebar-link">
 
-                    🏠 Dashboard
+                    <span class="menu-icon">🏠</span>
+
+                    <span>Dashboard</span>
 
                 </a>
+
 
                 <a
                     href="../converter/index.php"
-                    class="list-group-item list-group-item-action">
+                    class="sidebar-link">
 
-                    🔊 Text to Speech
+                    <span class="menu-icon">🔊</span>
+
+                    <span>Text to Speech</span>
 
                 </a>
+
 
                 <a
                     href="index.php"
-                    class="list-group-item list-group-item-action active">
+                    class="sidebar-link active">
 
-                    📄 My Documents
+                    <span class="menu-icon">📄</span>
+
+                    <span>My Documents</span>
 
                 </a>
+
 
                 <a
                     href="../history/index.php"
-                    class="list-group-item list-group-item-action">
+                    class="sidebar-link">
 
-                    🕘 Conversion History
+                    <span class="menu-icon">🕘</span>
+
+                    <span>History</span>
 
                 </a>
 
+            </div>
+
+
+            <!-- Divider -->
+
+            <div class="sidebar-divider"></div>
+
+
+            <!-- Account -->
+
+            <div class="sidebar-title">
+
+                ACCOUNT
+
+            </div>
+
+            <div class="sidebar-menu">
+
                 <a
                     href="../profile/index.php"
-                    class="list-group-item list-group-item-action">
+                    class="sidebar-link">
 
-                    👤 Profile
+                    <span class="menu-icon">👤</span>
+
+                    <span>My Profile</span>
+
+                </a>
+
+
+                <a
+                    href="../auth/logout.php"
+                    class="sidebar-link logout-link">
+
+                    <span class="menu-icon">🚪</span>
+
+                    <span>Logout</span>
 
                 </a>
 
@@ -135,9 +218,14 @@ $documents = $stmt->fetchAll();
         </aside>
 
 
-        <!-- CONTENT -->
+        <!-- =====================================================
+             MAIN CONTENT
+        ====================================================== -->
 
         <main class="col-md-9 col-lg-10 p-4">
+
+
+            <!-- Page Header -->
 
             <div
                 class="d-flex justify-content-between
@@ -146,14 +234,19 @@ $documents = $stmt->fetchAll();
                 <div>
 
                     <h2 class="fw-bold">
+
                         My Documents
+
                     </h2>
 
                     <p class="text-muted">
+
                         Manage your saved text documents.
+
                     </p>
 
                 </div>
+
 
                 <a
                     href="../converter/index.php"
@@ -166,30 +259,54 @@ $documents = $stmt->fetchAll();
             </div>
 
 
+            <!-- =================================================
+                 SUCCESS MESSAGE
+            ================================================== -->
+
             <?php if (isset($_GET["saved"])): ?>
 
-                <div class="alert alert-success">
+                <div
+                    class="alert alert-success
+                           alert-dismissible fade show">
 
                     Document saved successfully.
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert">
+                    </button>
 
                 </div>
 
             <?php endif; ?>
 
 
+            <!-- =================================================
+                 NO DOCUMENTS
+            ================================================== -->
+
             <?php if (empty($documents)): ?>
 
                 <div class="card border-0 shadow-sm">
 
-                    <div class="card-body text-center p-5">
+                    <div
+                        class="card-body
+                               text-center p-5">
 
                         <div class="display-4">
+
                             📄
+
                         </div>
 
+
                         <h4 class="fw-bold mt-3">
+
                             No documents yet
+
                         </h4>
+
 
                         <p class="text-muted">
 
@@ -197,6 +314,7 @@ $documents = $stmt->fetchAll();
                             text-to-speech document.
 
                         </p>
+
 
                         <a
                             href="../converter/index.php"
@@ -210,6 +328,11 @@ $documents = $stmt->fetchAll();
 
                 </div>
 
+
+            <!-- =================================================
+                 DOCUMENT LIST
+            ================================================== -->
+
             <?php else: ?>
 
                 <div class="row g-4">
@@ -219,7 +342,11 @@ $documents = $stmt->fetchAll();
                         <div class="col-md-6 col-xl-4">
 
                             <div
-                                class="card border-0 shadow-sm h-100">
+                                class="card border-0
+                                       shadow-sm h-100">
+
+
+                                <!-- Document Content -->
 
                                 <div class="card-body">
 
@@ -231,6 +358,7 @@ $documents = $stmt->fetchAll();
 
                                     </h5>
 
+
                                     <p class="text-muted small">
 
                                         <?= htmlspecialchars(
@@ -241,13 +369,23 @@ $documents = $stmt->fetchAll();
                                             )
                                         ) ?>
 
-                                        <?= mb_strlen(
-                                            $document["content"]
-                                        ) > 150 ? "..." : "" ?>
+                                        <?php if (
+                                            mb_strlen(
+                                                $document["content"]
+                                            ) > 150
+                                        ): ?>
+
+                                            ...
+
+                                        <?php endif; ?>
 
                                     </p>
 
+
                                     <hr>
+
+
+                                    <!-- Document Statistics -->
 
                                     <div
                                         class="d-flex
@@ -258,15 +396,18 @@ $documents = $stmt->fetchAll();
                                             <?= number_format(
                                                 $document["word_count"]
                                             ) ?>
+
                                             words
 
                                         </small>
+
 
                                         <small class="text-muted">
 
                                             <?= number_format(
                                                 $document["character_count"]
                                             ) ?>
+
                                             characters
 
                                         </small>
@@ -275,20 +416,30 @@ $documents = $stmt->fetchAll();
 
                                 </div>
 
-                                <div class="card-footer bg-white border-0">
+
+                                <!-- Document Actions -->
+
+                                <div
+                                    class="card-footer
+                                           bg-white border-0">
 
                                     <a
-                                        href="edit.php?id=<?= $document["id"] ?>"
-                                        class="btn btn-sm btn-outline-primary">
+                                        href="edit.php?id=<?= (int) $document["id"] ?>"
+                                        class="btn btn-sm
+                                               btn-outline-primary">
 
                                         Edit
 
                                     </a>
 
+
                                     <a
-                                        href="delete.php?id=<?= $document["id"] ?>"
-                                        class="btn btn-sm btn-outline-danger"
-                                        onclick="return confirm('Delete this document?');">
+                                        href="delete.php?id=<?= (int) $document["id"] ?>"
+                                        class="btn btn-sm
+                                               btn-outline-danger"
+                                        onclick="return confirm(
+                                            'Delete this document?'
+                                        );">
 
                                         Delete
 
@@ -312,6 +463,18 @@ $documents = $stmt->fetchAll();
 
 </div>
 
+
+<!-- Bootstrap JavaScript -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
 </body>
 
 </html>
+```
+
+This version now follows the same **Dashboard → Text to Speech → Documents → History → Profile** structure, so the interface will feel consistent throughout SpeakFlow.
+
+Next, the logical page to clean is **`documents/edit.php`**, so editing a saved document uses the same design too.

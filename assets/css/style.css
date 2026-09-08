@@ -1,0 +1,304 @@
+body {
+    font-family: Arial, sans-serif;
+    color: #1f2937;
+}
+
+.hero {
+    padding: 70px 0;
+    background: linear-gradient(
+        135deg,
+        #f8fbff,
+        #eef5ff
+    );
+}
+
+.min-vh-75 {
+    min-height: 75vh;
+}
+
+.converter-preview {
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+}
+
+.feature-card {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    height: 100%;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+}
+
+.feature-icon {
+    font-size: 35px;
+    margin-bottom: 15px;
+}
+
+.feature-card h5 {
+    font-weight: 700;
+}
+
+.feature-card p {
+    color: #6b7280;
+}
+
+textarea {
+    resize: vertical;
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+
+.sidebar {
+    background: #ffffff;
+    min-height: 100vh;
+    padding: 25px 15px;
+    border-right: 1px solid #e9ecef;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.03);
+}
+
+
+/* Sidebar Title */
+
+.sidebar-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #9ca3af;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 15px 12px;
+}
+
+
+/* Navigation Container */
+
+.sidebar .list-group {
+    gap: 8px;
+}
+
+
+/* Navigation Links */
+
+.sidebar .list-group-item {
+    border: none;
+    border-radius: 10px !important;
+    padding: 13px 15px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #4b5563;
+    background: transparent;
+
+    transition: all 0.3s ease;
+}
+
+
+/* Hover Effect */
+
+.sidebar .list-group-item:hover {
+    background: #eef4ff;
+    color: #0d6efd;
+
+    transform: translateX(5px);
+}
+
+
+/* Active Menu */
+
+.sidebar .list-group-item.active {
+    background: linear-gradient(
+        135deg,
+        #0d6efd,
+        #4f8cff
+    );
+
+    color: #ffffff;
+
+    box-shadow:
+        0 5px 15px
+        rgba(13, 110, 253, 0.25);
+}
+
+
+/* Icons */
+
+.sidebar .menu-icon {
+    width: 28px;
+    display: inline-block;
+    font-size: 17px;
+}
+
+
+/* Divider */
+
+.sidebar-divider {
+    border-top: 1px solid #eeeeee;
+    margin: 20px 0;
+}
+
+/* =========================================
+   SPEAKFLOW SIDEBAR
+========================================= */
+
+.sidebar {
+    min-height: 100vh;
+    background: #ffffff;
+    padding: 25px 15px;
+    border-right: 1px solid #e9ecef;
+    box-shadow: 3px 0 15px rgba(0, 0, 0, 0.03);
+}
+
+
+/* =========================================
+   SIDEBAR BRAND
+========================================= */
+
+.sidebar-brand {
+    padding: 0 10px;
+    margin-bottom: 35px;
+}
+
+.sidebar-brand a {
+    text-decoration: none;
+    color: #212529;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.sidebar-brand span {
+    margin-left: 5px;
+}
+
+
+/* =========================================
+   SIDEBAR SECTION TITLE
+========================================= */
+
+.sidebar-title {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #9ca3af;
+    margin: 20px 12px 12px;
+}
+
+
+/* =========================================
+   SIDEBAR MENU
+========================================= */
+
+.sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+
+/* =========================================
+   SIDEBAR LINKS
+========================================= */
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 13px 15px;
+
+    border-radius: 10px;
+
+    text-decoration: none;
+
+    color: #6b7280;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    transition: all 0.3s ease;
+}
+
+
+/* =========================================
+   ICONS
+========================================= */
+
+.menu-icon {
+    font-size: 18px;
+    width: 25px;
+    text-align: center;
+}
+
+
+/* =========================================
+   HOVER EFFECT
+========================================= */
+
+.sidebar-link:hover {
+    background: #eef4ff;
+    color: #0d6efd;
+
+    transform: translateX(5px);
+}
+
+
+/* =========================================
+   ACTIVE LINK
+========================================= */
+
+.sidebar-link.active {
+    background: linear-gradient(
+        135deg,
+        #0d6efd,
+        #4f8cff
+    );
+
+    color: #ffffff;
+
+    box-shadow:
+        0 6px 15px
+        rgba(13, 110, 253, 0.25);
+}
+
+
+/* =========================================
+   DIVIDER
+========================================= */
+
+.sidebar-divider {
+    height: 1px;
+    background: #e9ecef;
+    margin: 25px 10px;
+}
+
+
+/* =========================================
+   LOGOUT
+========================================= */
+
+.logout-link {
+    color: #dc3545;
+}
+
+.logout-link:hover {
+    background: #fff1f2;
+    color: #dc3545;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 768px) {
+
+    .sidebar {
+        min-height: auto;
+        padding: 15px;
+    }
+
+    .sidebar-brand {
+        margin-bottom: 20px;
+    }
+
+}

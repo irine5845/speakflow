@@ -37,6 +37,8 @@ $conversions = $stmt->fetchAll();
     <link
         rel="stylesheet"
         href="../assets/css/style.css">
+        <a href="../history/index.php"
+   class="sidebar-link active">
 
 </head>
 
